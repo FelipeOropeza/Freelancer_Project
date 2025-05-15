@@ -16,21 +16,21 @@
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="job_listing.html">Find a Jobs </a></li>
-                                        <li><a href="#">Page</a>
+                                        <li><a href="/">Inicio</a></li>
+                                        <li><a href="job_listing.html">Encontre um Freelancer</a></li>
+                                        <!-- <li><a href="#">Page</a>
                                             <ul class="submenu">
                                                 <li><a href="single-blog.html">Blog Details</a></li>
                                                 <li><a href="elements.html">Elements</a></li>
                                                 <li><a href="job_details.html">job Details</a></li>
                                             </ul>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </nav>
                             </div>
                             <!-- Header-btn -->
                             <div class="header-btn d-none f-right d-lg-block">
-                                <a href="#" class="btn head-btn1">Register</a>
+                                <a href="<?= url_to("cadasto_user") ?>" class="btn head-btn1">Cadastro</a>
                                 <a href="#" class="btn head-btn2">Login</a>
                             </div>
                         </div>

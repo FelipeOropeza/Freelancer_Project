@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <?= $this->include('layout/css') ?>
+    <?= $this->renderSection('style') ?>
 </head>
 
 <body>
@@ -20,6 +21,8 @@
     </main>
 
     <?= $this->include('layout/footer') ?>
+
+    <?= $this->renderSection('javascript') ?>
     <?= $this->include('layout/scripts') ?>
 </body>
 

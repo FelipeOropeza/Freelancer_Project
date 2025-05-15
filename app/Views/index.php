@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-9 col-md-10">
                         <div class="hero__caption">
-                            <h1>Find the most exciting startup jobs</h1>
+                            <h1>Encontre os melhores colaboradores aqui</h1>
                         </div>
                     </div>
                 </div>
@@ -33,8 +33,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-tittle text-center">
-                    <span>FEATURED TOURS Packages</span>
-                    <h2>Browse Top Categories </h2>
+                    <h2>Navegar pelas principais categorias</h2>
                 </div>
             </div>
         </div>
@@ -89,7 +88,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="browse-btn2 text-center mt-50">
-                    <a href="job_listing.html" class="border-btn2">Browse All Sectors</a>
+                    <a href="job_listing.html" class="border-btn2">Navegar por todos os setores</a>
                 </div>
             </div>
         </div>
@@ -102,9 +101,9 @@
         <div class="row justify-content-center">
             <div class="col-xl-10">
                 <div class="cv-caption text-center">
-                    <p class="pera1">FEATURED TOURS Packages</p>
-                    <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                    <a href="#" class="border-btn2 border-btn4">Upload your cv</a>
+                    <p class="pera1">Oportunidades na Gastronomia</p>
+                    <p class="pera2">Conecte-se com projetos e eventos como freelancer gastronômico!</p>
+                    <a href="#" class="border-btn2 border-btn4">Cadastre seu currículo</a>
                 </div>
             </div>
         </div>
@@ -221,16 +220,16 @@
 <!-- How  Apply Process Start-->
 <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
     <div class="container">
-        <!-- Section Tittle -->
+        <!-- Título da Seção -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-tittle white-text text-center">
-                    <span>Apply process</span>
-                    <h2> How it works</h2>
+                    <span>Como funciona</span>
+                    <h2>Etapas para começar</h2>
                 </div>
             </div>
         </div>
-        <!-- Apply Process Caption -->
+        <!-- Etapas do Processo -->
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="single-process text-center mb-30">
@@ -238,9 +237,9 @@
                         <span class="flaticon-search"></span>
                     </div>
                     <div class="process-cap">
-                        <h5>1. Search a job</h5>
-                        <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                            laborea.</p>
+                        <h5>1. Cadastre-se na plataforma</h5>
+                        <p>Crie seu perfil profissional e destaque suas habilidades para atrair as melhores
+                            oportunidades.</p>
                     </div>
                 </div>
             </div>
@@ -250,9 +249,9 @@
                         <span class="flaticon-curriculum-vitae"></span>
                     </div>
                     <div class="process-cap">
-                        <h5>2. Apply for job</h5>
-                        <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                            laborea.</p>
+                        <h5>2. Mantenha seu portfólio atualizado</h5>
+                        <p>Adicione experiências, serviços e projetos realizados 
+                            para aumentar sua visibilidade.</p>
                     </div>
                 </div>
             </div>
@@ -262,15 +261,16 @@
                         <span class="flaticon-tour"></span>
                     </div>
                     <div class="process-cap">
-                        <h5>3. Get your job</h5>
-                        <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
-                            laborea.</p>
+                        <h5>3. Aguarde o contato das empresas</h5>
+                        <p>Empresas interessadas entrarão em contato direto com você para oferecer trabalhos e
+                            parcerias.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- How  Apply Process End-->
 <!-- Testimonial Start -->
 <div class="testimonial-area testimonial-padding">
