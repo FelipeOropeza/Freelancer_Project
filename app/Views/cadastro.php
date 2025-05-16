@@ -24,7 +24,7 @@
             <input type="radio" name="tipoUsuario" value="empresa" autocomplete="off"> Empresa
         </label>
     </div>
-    <form>
+    <form action="<?= url_to("criar_user") ?>" method="post">
         <div class="form-group" id="nomeGroup">
             <label for="nome">Nome completo</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
