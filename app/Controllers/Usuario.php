@@ -22,6 +22,20 @@ class Usuario extends BaseController
     {
         $dadosForm = $this->request->getPost();
 
+        if (!empty($dadosForm['cpf'])) {
+            $dadosForm['tipo'] = 'freelancer';
+        } else {
+            $dadosForm['tipo'] = 'empresa';
+        }
+
         $this->usuarioModel->insert($dadosForm);
+
+        return redirect()->to('/login');
+    }
+
+
+    public function login()
+    {
+        return view('login');
     }
 }

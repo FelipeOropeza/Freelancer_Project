@@ -35,7 +35,7 @@ class UsuarioModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert   = ['hashSenha'];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
@@ -43,4 +43,12 @@ class UsuarioModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+     protected function hashSenha(array $data)
+    {
+        if (isset($data['data']['senha'])) {
+            $data['data']['senha'] = password_hash($data['data']['senha'], PASSWORD_DEFAULT);
+        }
+        return $data;
+    }
 }

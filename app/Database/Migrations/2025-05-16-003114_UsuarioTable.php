@@ -25,13 +25,12 @@ class UsuarioTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => false,
-
+                'unique'     => true,
             ],
             'senha' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'null' => false,
-
             ],
             'tipo' => [
                 'type' => "ENUM('admin','empresa','freelancer')",
