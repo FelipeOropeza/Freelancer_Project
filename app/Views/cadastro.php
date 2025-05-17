@@ -1,4 +1,5 @@
 <?= $this->extend('layout/default') ?>
+
 <?= $this->section('style') ?>
 <style>
     .btn-group .btn {
@@ -24,18 +25,19 @@
             <input type="radio" name="tipoUsuario" value="empresa" autocomplete="off"> Empresa
         </label>
     </div>
+
     <form action="<?= url_to("criar_user") ?>" method="post">
+        <div class="form-group d-none" id="nomeGroup">
+            <label for="freelancer_nome">Nome completo</label>
+            <input type="text" class="form-control" id="freelancer_nome" name="freelancer_nome">
+        </div>
+
         <div class="form-group" id="nomeGroup">
-            <label for="nome">Nome completo</label>
+            <label for="nome" id="labelNome">Nome completo</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
 
-        <div class="form-group d-none" id="empresaNomeGroup">
-            <label for="empresa_nome">Nome da empresa</label>
-            <input type="text" class="form-control" id="empresa_nome" name="empresa_nome">
-        </div>
-
-        <div class="form-group" id="cpfGroup">
+        <div class="form-group d-none" id="cpfGroup">
             <label for="cpf">CPF</label>
             <input type="text" class="form-control" id="cpf" name="cpf">
         </div>
@@ -58,23 +60,41 @@
         <button type="submit" class="btn btn-success mb-4">Cadastrar</button>
     </form>
 </div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('javascript') ?>
 <script>
+    function toggleFields(tipo) {
+        $('#email').val('');
+        $('#senha').val('');
+        $('#nome').val('');
+
+        if (tipo === 'empresa') {
+            $('#labelNome').text('Nome da empresa');
+            $('#cnpjGroup').removeClass('d-none');
+            $('#cnpj').prop('disabled', false);
+
+            $('#cpfGroup').addClass('d-none');
+            $('#cpf').prop('disabled', true);
+        } else {
+            $('#labelNome').text('Nome completo');
+            $('#cpfGroup').removeClass('d-none');
+            $('#cpf').prop('disabled', false);
+
+            $('#cnpjGroup').addClass('d-none');
+            $('#cnpj').prop('disabled', true);
+        }
+    }
+
     window.addEventListener('DOMContentLoaded', function () {
-        console.log('script carregado');
+        const tipoInicial = $('input[name="tipoUsuario"]:checked').val();
+        toggleFields(tipoInicial);
 
         $('input[name="tipoUsuario"]').change(function () {
-            if ($(this).val() === 'empresa') {
-                $('#empresaNomeGroup, #cnpjGroup').removeClass('d-none');
-                $('#cpfGroup, #nomeGroup').addClass('d-none');
-            } else {
-                $('#empresaNomeGroup, #cnpjGroup').addClass('d-none');
-                $('#cpfGroup, #nomeGroup').removeClass('d-none');
-            }
+            toggleFields($(this).val());
         });
     });
-</script>
 
+</script>
 <?= $this->endSection() ?>
