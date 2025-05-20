@@ -19,13 +19,12 @@ class UsuarioTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 30,
                 'null' => false,
-
             ],
             'email' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => false,
-                'unique'     => true,
+                'unique' => true,
             ],
             'senha' => [
                 'type' => 'VARCHAR',
