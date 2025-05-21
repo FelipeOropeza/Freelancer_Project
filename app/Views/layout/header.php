@@ -7,7 +7,7 @@
                     <div class="col-lg-3 col-md-2">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a href="/"><img src="assets/img/logo/logo.png" alt="Logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9">
@@ -17,21 +17,26 @@
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
                                         <li><a href="/">Inicio</a></li>
-                                        <li><a href="job_listing.html">Encontre um Freelancer</a></li>
-                                        <!-- <li><a href="#">Page</a>
-                                            <ul class="submenu">
-                                                <li><a href="single-blog.html">Blog Details</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                                <li><a href="job_details.html">job Details</a></li>
-                                            </ul>
-                                        </li> -->
+                                        <li><a href="/freelancers">Encontre um Freelancer</a></li>
                                     </ul>
                                 </nav>
                             </div>
                             <!-- Header-btn -->
                             <div class="header-btn d-none f-right d-lg-block">
-                                <a href="<?= url_to("cadasto_user") ?>" class="btn head-btn1">Cadastro</a>
-                                <a href="<?= url_to("login_user") ?>" class="btn head-btn2">Login</a>
+                                <?php if (session()->has('usuario')): ?>
+                                    <?php
+                                        $usuario = session('usuario');
+                                        $nomeUsuario = is_array($usuario) ? ($usuario['nome'] ?? 'Usuário') : ($usuario->nome ?? 'Usuário');
+                                        if (strlen($nomeUsuario) < 10) {
+                                            $nomeUsuario = str_pad($nomeUsuario, 10, '*');
+                                        }
+                                    ?>
+                                    <span class="me-3 text-black fw-bold"><?= esc($nomeUsuario) ?></span>
+                                    <a href="<?= url_to('logout_user') ?>" class="btn head-btn2">Logout</a>
+                                <?php else: ?>
+                                    <a href="<?= url_to("cadasto_user") ?>" class="btn head-btn1">Cadastro</a>
+                                    <a href="<?= url_to("login_user") ?>" class="btn head-btn2">Login</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

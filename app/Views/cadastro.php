@@ -27,6 +27,7 @@
     </div>
 
     <form action="<?= url_to("criar_user") ?>" method="post">
+        <?= csrf_field() ?>
         <div class="form-group d-none" id="nomeGroup">
             <label for="freelancer_nome">Nome completo</label>
             <input type="text" class="form-control" id="freelancer_nome" name="freelancer_nome">
