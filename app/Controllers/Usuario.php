@@ -92,9 +92,12 @@ class Usuario extends BaseController
 
         $usuario = $this->usuarioModel->where('email', $dadosForm['email'])->first();
 
+        if($usuario['email_valido'] == 0){
+            return redirect()->back()->withInput()->with('validation', 'E-mail não foi validado');
+        }
+
         if (!$usuario || !password_verify($dadosForm['senha'], $usuario['senha'])) {
             return redirect()->back()->withInput()->with('validation', 'E-mail ou senha inválidos.');
-            ;
         }
 
         unset($usuario['senha']);
