@@ -17,7 +17,15 @@
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
                                         <li><a href="/">Inicio</a></li>
-                                        <li><a href="/freelancers">Encontre um Freelancer</a></li>
+                                        <?php 
+                                            $usuario = session('usuario');
+                                            $tipoUsuario = is_array($usuario) ? ($usuario['tipo'] ?? '') : ($usuario->tipo ?? '');
+                                            
+                                            // Exibe se não estiver logado ou se for do tipo empresa
+                                            if (!session()->has('usuario') || $tipoUsuario === 'empresa'):
+                                        ?>
+                                            <li><a href="/freelancers">Encontre um Freelancer</a></li>
+                                        <?php endif; ?>
                                     </ul>
                                 </nav>
                             </div>
@@ -25,7 +33,6 @@
                             <div class="header-btn d-none f-right d-lg-block">
                                 <?php if (session()->has('usuario')): ?>
                                     <?php
-                                        $usuario = session('usuario');
                                         $nomeUsuario = is_array($usuario) ? ($usuario['nome'] ?? 'Usuário') : ($usuario->nome ?? 'Usuário');
                                         if (strlen($nomeUsuario) < 10) {
                                             $nomeUsuario = str_pad($nomeUsuario, 10, '*');
@@ -42,7 +49,26 @@
                     </div>
                     <!-- Mobile Menu -->
                     <div class="col-12">
-                        <div class="mobile_menu d-block d-lg-none"></div>
+                        <div class="mobile_menu d-block d-lg-none">
+                            <nav>
+                                <ul>
+                                    <li><a href="/">Inicio</a></li>
+                                    <?php 
+                                        if (!session()->has('usuario') || $tipoUsuario === 'empresa'):
+                                    ?>
+                                        <li><a href="/freelancers">Encontre um Freelancer</a></li>
+                                    <?php endif; ?>
+                                    
+                                    <?php if (session()->has('usuario')): ?>
+                                        <li><span class="text-black fw-bold"><?= esc($nomeUsuario) ?></span></li>
+                                        <li><a href="<?= url_to('logout_user') ?>">Logout</a></li>
+                                    <?php else: ?>
+                                        <li><a href="<?= url_to("cadasto_user") ?>">Cadastro</a></li>
+                                        <li><a href="<?= url_to("login_user") ?>">Login</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>

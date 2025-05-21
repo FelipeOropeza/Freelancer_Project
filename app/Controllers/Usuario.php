@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\EmailModel;
 use App\Models\EmpresaModel;
 use App\Models\FreelancerModel;
 use App\Models\UsuarioModel;
@@ -11,14 +12,19 @@ class Usuario extends BaseController
     private $usuarioModel;
     private $empresaModel;
     private $freelancerModel;
+    private $emailModel;
     private $db;
+    private $email;
 
     public function __construct()
     {
         $this->usuarioModel = new UsuarioModel();
         $this->empresaModel = new EmpresaModel();
         $this->freelancerModel = new FreelancerModel();
+        $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
+        $this->email = service('email');
+
     }
 
     public function cadastro()
@@ -70,7 +76,33 @@ class Usuario extends BaseController
                 }
             }
 
+
+            $this->emailModel->insert([
+                'assunto' => 'Verificação Email',
+                'mensagem' => 'É preciso verificar o email pra entrar no website',
+                'data_envio' => date('Y-m-d'),
+                'fk_usuarios_id'=> $id
+            ]);
+
             $this->db->transCommit();
+
+
+            $dados = [
+                'titulo' => 'Olá, tudo certo?',
+                'mensagem' => 'Click no botão abaixo pra validar seu e-maiil.',
+                'link_text' => 'Validar e-mail',
+                'parametro' => $dadosForm['email']
+            ];
+
+            $mensagem = view('emails/template', $dados);
+
+            $this->email->setFrom('felipe2006.co@gmail.com', 'Job Flnder');
+            $this->email->setTo($dadosForm['email']);
+            $this->email->setSubject('Verificação do e-email');
+            $this->email->setMessage($mensagem);
+
+            $this->email->send();
+
             return redirect()->to('/login')->with('success', 'Pra completar o cadastro verifique o seu e-mail!');
 
         } catch (\Exception $e) {
@@ -79,6 +111,19 @@ class Usuario extends BaseController
             echo 'Erro: ' . $e->getMessage();
             // return redirect()->back()->with('erro', $e->getMessage());
         }
+    }
+
+    public function validaEmail()
+    {
+        $email = $this->request->getGet('email');
+
+        $usuario = $this->usuarioModel->where('email', $email)->first();
+
+        $this->usuarioModel->update($usuario['id'], [
+            'email_valido' => 1
+        ]);
+
+        return redirect()->to('/login')->with('success', 'Seu email foi verificado com sucesso!');
     }
 
     public function login()
@@ -92,7 +137,7 @@ class Usuario extends BaseController
 
         $usuario = $this->usuarioModel->where('email', $dadosForm['email'])->first();
 
-        if($usuario['email_valido'] == 0){
+        if ($usuario['email_valido'] == 0) {
             return redirect()->back()->withInput()->with('validation', 'E-mail não foi validado');
         }
 
