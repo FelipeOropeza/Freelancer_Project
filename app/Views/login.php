@@ -5,13 +5,19 @@
     <div class="w-100" style="max-width: 400px;">
         <h3 class="text-center mb-4">Login</h3>
 
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashdata('error') ?>
+        <?php if (session()->has('success')): ?>
+            <div id="success-alert" class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
+
+        <?php if (session()->has('validation')): ?>
+            <div class="text-danger">
+                <?= session('validation') ?>
             </div>
         <?php endif; ?>
 
-        <form action="<?= base_url('login') ?>" method="post">
+
+
+        <form action="<?= url_to('autenticar_user') ?>" method="post">
             <?= csrf_field() ?>
             <div class="form-group">
                 <label for="email">E-mail</label>
@@ -27,4 +33,17 @@
         </form>
     </div>
 </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('javascript') ?>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            setTimeout(function () {
+                successAlert.style.display = 'none';
+            }, 4000);
+        }
+    });
+</script>
 <?= $this->endSection() ?>

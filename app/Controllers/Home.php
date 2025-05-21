@@ -11,6 +11,6 @@ class Home extends BaseController
 
     public function teste(): string
     {
-        return view('single-blog');
+        return view('job_listing');
     }
 }

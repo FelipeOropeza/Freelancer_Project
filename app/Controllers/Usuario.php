@@ -71,7 +71,7 @@ class Usuario extends BaseController
             }
 
             $this->db->transCommit();
-            return redirect()->to('/login');
+            return redirect()->to('/login')->with('success', 'Pra completar o cadastro verifique o seu e-mail!');
 
         } catch (\Exception $e) {
             $this->db->transRollback();
@@ -81,9 +81,33 @@ class Usuario extends BaseController
         }
     }
 
-
     public function login()
     {
         return view('login');
+    }
+
+    public function autenticar()
+    {
+        $dadosForm = $this->request->getPost();
+
+        $usuario = $this->usuarioModel->where('email', $dadosForm['email'])->first();
+
+        if (!$usuario || !password_verify($dadosForm['senha'], $usuario['senha'])) {
+            return redirect()->back()->withInput()->with('validation', 'E-mail ou senha inválidos.');
+            ;
+        }
+
+        unset($usuario['senha']);
+
+        // var_dump($usuario);
+        session()->set('usuario', $usuario);
+
+        return redirect()->to('/');
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/')->with('sucesso', 'Sessão encerrada.');
     }
 }
