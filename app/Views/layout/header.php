@@ -21,10 +21,9 @@
                                             $usuario = session('usuario');
                                             $tipoUsuario = is_array($usuario) ? ($usuario['tipo'] ?? '') : ($usuario->tipo ?? '');
                                             
-                                            // Exibe se não estiver logado ou se for do tipo empresa
                                             if (!session()->has('usuario') || $tipoUsuario === 'empresa'):
                                         ?>
-                                            <li><a href="/freelancers">Encontre um Freelancer</a></li>
+                                            <li><a href="/lista">Encontre um Freelancer</a></li>
                                         <?php endif; ?>
                                     </ul>
                                 </nav>
@@ -56,7 +55,7 @@
                                     <?php 
                                         if (!session()->has('usuario') || $tipoUsuario === 'empresa'):
                                     ?>
-                                        <li><a href="/freelancers">Encontre um Freelancer</a></li>
+                                        <li><a href="/lista">Encontre um Freelancer</a></li>
                                     <?php endif; ?>
                                     
                                     <?php if (session()->has('usuario')): ?>

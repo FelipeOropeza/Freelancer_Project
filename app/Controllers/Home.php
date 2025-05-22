@@ -9,8 +9,8 @@ class Home extends BaseController
         return view('index');
     }
 
-    public function teste(): string
+    public function lista(): string
     {
-        return view('job_listing');
+        return view('listafreela');
     }
 }

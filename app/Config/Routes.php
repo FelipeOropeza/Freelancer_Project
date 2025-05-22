@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->get('/teste', 'Home::teste');
+$routes->get('/lista', 'Home::lista');
 $routes->get("/cadastro", "Usuario::cadastro",['as' => "cadasto_user"]);
 $routes->post("/cadastro", "Usuario::criarUsuario",['as' => "criar_user"]);
 $routes->get('valida/email', 'Usuario::validaEmail', ['as' => 'valida_email']);

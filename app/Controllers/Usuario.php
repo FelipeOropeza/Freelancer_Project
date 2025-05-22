@@ -76,7 +76,6 @@ class Usuario extends BaseController
                 }
             }
 
-
             $this->emailModel->insert([
                 'assunto' => 'Verificação Email',
                 'mensagem' => 'É preciso verificar o email pra entrar no website',
@@ -85,7 +84,6 @@ class Usuario extends BaseController
             ]);
 
             $this->db->transCommit();
-
 
             $dados = [
                 'titulo' => 'Olá, tudo certo?',
