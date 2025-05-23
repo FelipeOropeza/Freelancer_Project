@@ -43,4 +43,11 @@ class FreelancerModel extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
+
+    public function getFreelancersWithUser($itensPorPagina = 10)
+    {
+        return $this->select('freelancers.*, usuarios.nome, usuarios.email')
+            ->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id')
+            ->paginate($itensPorPagina, 'freelancers');
+    }
 }

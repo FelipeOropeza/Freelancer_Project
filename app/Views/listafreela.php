@@ -82,7 +82,7 @@
                             foreach ($dias as $dia):
                                 ?>
                                 <label class="container">
-                                    <?= ucfirst($dia) . '-feira'  ?>
+                                    <?= ucfirst($dia) . '-feira' ?>
                                     <input type="checkbox" name="dias[]" value="<?= $dia ?>">
                                     <span class="checkmark"></span>
                                 </label>
@@ -106,36 +106,54 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="count-job mb-35">
-                                    <span>12 Vagas Encontradas</span>
+                                    <span><?= $totalFreela ?> Freelacers Encontrados</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Exemplo de vaga -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                        <?php foreach ($freelancers as $freelancer): ?>
+                            <div class="single-job-items mb-30"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+
+                                <div class="job-items" style="display: flex; align-items: center; gap: 15px; flex: 1;">
+                                    <div class="company-img">
+                                        <a href="#"><img src="assets/img/icon/trabalho-freelance.png" width="50" height="50"
+                                                alt=""></a>
+                                    </div>
+                                    <div class="job-tittle job-tittle2" style="flex: 1;">
+                                        <a href="#">
+                                            <h4><?= esc($freelancer['nome']) ?></h4>
+                                        </a>
+                                        <?php
+                                        $especialidades = $freelancer['especialidades'] ?? 'Não informado';
+                                        $especialidadesArray = array_map('trim', explode(',', $especialidades));
+                                        $primeira = $especialidadesArray[0];
+                                        $especialidadeExibida = (count($especialidadesArray) > 1) ? esc($primeira) . '...' : esc($primeira);
+                                        ?>
+                                        <li>Especialidade: <?= $especialidadeExibida ?></li>
+                                        <ul
+                                            style="list-style: none; padding: 0; margin: 0; display: flex; gap: 15px; font-size: 14px;">
+
+                                            <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                                            <li>
+                                                <?= $freelancer['valor_diaria']
+                                                    ? 'R$ ' . number_format($freelancer['valor_diaria'], 2, ',', '.')
+                                                    : 'Sem valor' ?>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="job-tittle job-tittle2">
-                                    <a href="#">
-                                        <h4>Garçom</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Restaurante Central</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>São Paulo, SP</li>
-                                        <li>R$ 150 / diária</li>
-                                    </ul>
+
+                                <div class="items-link items-link2 f-right" style="margin-left: 20px;">
+                                    <a href="#">Ver Detalhes</a>
                                 </div>
+
                             </div>
-                            <div class="items-link items-link2 f-right">
-                                <a href="#">Ver Detalhes</a>
-                                <span>Publicado há 3 horas</span>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+
 
                         <!-- Repita o bloco acima para outras vagas -->
-
                     </div>
                 </section>
             </div>
@@ -144,24 +162,18 @@
 </div>
 
 <!-- Paginação -->
-<div class="pagination-area pb-115 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="single-wrap d-flex justify-content-center">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-start">
-                            <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a>
-                            </li>
-                        </ul>
-                    </nav>
+<?php if ($pager): ?>
+    <div class="pagination-area pb-115 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="single-wrap d-flex justify-content-center">
+                        <?= $pager->links('freelancers', 'foundation_full') ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php endif; ?>
 
 <?= $this->endSection() ?>
