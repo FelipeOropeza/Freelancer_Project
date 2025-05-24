@@ -44,10 +44,55 @@ class FreelancerModel extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function getFreelancersWithUser($itensPorPagina = 10)
+    public function getFreelancersWithUserFiltered(array $filtros = [], int $itensPorPagina = 10)
     {
-        return $this->select('freelancers.*, usuarios.nome, usuarios.email')
-            ->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id')
-            ->paginate($itensPorPagina, 'freelancers');
+        $builder = $this->select('freelancers.*, usuarios.nome, usuarios.email')
+            ->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id');
+
+        if (!empty($filtros['categoria'])) {
+            $builder->like('freelancers.especialidades', $filtros['categoria']);
+        }
+
+        if (isset($filtros['valor_min']) && $filtros['valor_min'] !== '') {
+            $builder->where('freelancers.valor_diaria >=', (float) $filtros['valor_min']);
+        }
+
+        if (isset($filtros['valor_max']) && $filtros['valor_max'] !== '') {
+            $builder->where('freelancers.valor_diaria <=', (float) $filtros['valor_max']);
+        }
+
+        if (!empty($filtros['dias']) && is_array($filtros['dias'])) {
+            foreach ($filtros['dias'] as $dia) {
+                $builder->like('freelancers.dias_disponiveis', $dia);
+            }
+        }
+
+        return $builder->paginate($itensPorPagina, 'freelancers');
+    }
+
+    public function countFiltered($filtros)
+    {
+        $query = $this->select('freelancers.id')
+            ->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id');
+
+        if (!empty($filtros['categoria'])) {
+            $query->like('freelancers.especialidades', $filtros['categoria']);
+        }
+
+        if (!empty($filtros['valor_min'])) {
+            $query->where('freelancers.valor_diaria >=', $filtros['valor_min']);
+        }
+
+        if (!empty($filtros['valor_max'])) {
+            $query->where('freelancers.valor_diaria <=', $filtros['valor_max']);
+        }
+
+        if (!empty($filtros['dias']) && is_array($filtros['dias'])) {
+            foreach ($filtros['dias'] as $dia) {
+                $query->like('freelancers.dias_disponiveis', $dia);
+            }
+        }
+
+        return $query->countAllResults();
     }
 }
