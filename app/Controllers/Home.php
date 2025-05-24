@@ -18,7 +18,7 @@ class Home extends BaseController
 
     public function index(): string
     {
-        return view('index');
+        return view('home/index');
     }
 
     public function lista(): string
@@ -45,7 +45,7 @@ class Home extends BaseController
 
         $totalFreela = $this->freelancerModel->countFiltered($filtros);
 
-        return view('listafreela', [
+        return view('home/listafreela', [
             'freelancers' => $freelancers,
             'pager' => $this->freelancerModel->pager,
             'totalFreela' => $totalFreela,

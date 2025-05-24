@@ -54,7 +54,7 @@
     <h1><?= $titulo ?></h1>
     <p><?= $mensagem ?></p>
     <?php if (isset($link_text) && isset($parametro)): ?>
-      <a class="btn" href="<?= site_url('valida/email?email=' . urlencode($parametro)) ?>"
+      <a class="btn" href="<?= site_url('/valida/email?email=' . urlencode($parametro)) ?>"
         target="_blank"><?= $link_text ?></a>
     <?php endif; ?>
     <div class="footer">

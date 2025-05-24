@@ -29,7 +29,7 @@ class Usuario extends BaseController
 
     public function cadastro()
     {
-        return view('cadastro');
+        return view('usuario/cadastro');
     }
 
     public function criarUsuario()
@@ -126,7 +126,7 @@ class Usuario extends BaseController
 
     public function login()
     {
-        return view('login');
+        return view('usuario/login');
     }
 
     public function autenticar()
