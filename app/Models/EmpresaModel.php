@@ -43,4 +43,24 @@ class EmpresaModel extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
+
+    public function getEmpresaComUsuario($empresaId = null)
+    {
+        $builder = $this->select('
+            usuarios.nome, 
+            usuarios.email, 
+            empresas.cnpj, 
+            empresas.descricao, 
+            empresas.telefone, 
+            empresas.site, 
+            empresas.endereco
+        ')->join('usuarios', 'usuarios.id = empresas.fk_usuarios_id');
+
+        if ($empresaId !== null) {
+            $builder->where('empresas.fk_usuarios_id', $empresaId);
+            return $builder->get()->getRow();
+        }
+
+        return $builder->get()->getResult();
+    }
 }

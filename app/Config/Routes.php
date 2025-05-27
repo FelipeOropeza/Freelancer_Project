@@ -16,3 +16,4 @@ $routes->post("/login", "Usuario::autenticar",['as' => "autenticar_user"]);
 
 
 $routes->get('/perfil-empresa', 'Empresa::index', ['as' => 'empresa_perfil']);
+$routes->post('/perfil-empresa/salvar', 'Empresa::salvarInfo', ['as' => 'empresa_info']);

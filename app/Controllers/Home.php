@@ -8,12 +8,12 @@ use App\Models\UsuarioModel;
 class Home extends BaseController
 {
     private $freelancerModel;
-    private $usuarioModel;
+    // private $usuarioModel;
 
     public function __construct()
     {
         $this->freelancerModel = new FreelancerModel();
-        $this->usuarioModel = new UsuarioModel();
+        // $this->usuarioModel = new UsuarioModel();
     }
 
     public function index(): string
