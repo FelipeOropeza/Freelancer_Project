@@ -11,7 +11,7 @@
                         <li><a style="color: #fb246a;" href="<?= url_to("empresa_perfil") ?>">Meu Perfil</a></li>
                         <li><a style="color: #fb246a;" href="/empresa/emails">Emails</a></li>
                         <li><a style="color: #fb246a;" href="/empresa/contratos">Contratos</a></li>
-                        <li><a style="color: #fb246a;" href="/empresa/propostas">Propostas</a></li>
+                        <li><a style="color: #fb246a;" href="<?= url_to("empresa_proposta") ?>">Propostas</a></li>
                     </ul>
                 </div>
             </div>

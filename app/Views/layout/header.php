@@ -44,7 +44,8 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <?php if ($tipoUsuario === 'empresa'): ?>
-                                                <a class="dropdown-item" href="<?= url_to("empresa_perfil") ?>">Área da Empresa</a>
+                                                <a class="dropdown-item" href="<?= url_to("empresa_perfil") ?>">Área da
+                                                    Empresa</a>
                                             <?php elseif ($tipoUsuario === 'freelancer'): ?>
                                                 <a class="dropdown-item" href="#">Área do Freelancer</a>
                                             <?php endif; ?>
