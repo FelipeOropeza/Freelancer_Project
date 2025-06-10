@@ -2,18 +2,22 @@
 
 namespace App\Controllers;
 
+use App\Models\EmpresaModel;
 use App\Models\FreelancerModel;
+use App\Models\PropostaModel;
 use App\Models\UsuarioModel;
 
 class Home extends BaseController
 {
     private $freelancerModel;
-    // private $usuarioModel;
+    private $propostaModel;
+        private $empresaModel;
 
     public function __construct()
     {
         $this->freelancerModel = new FreelancerModel();
-        // $this->usuarioModel = new UsuarioModel();
+        $this->empresaModel = new EmpresaModel;
+        $this->propostaModel = new PropostaModel();
     }
 
     public function index(): string
@@ -23,6 +27,26 @@ class Home extends BaseController
 
     public function lista(): string
     {
+        $usuarioData = session()->get('usuario');
+
+        $usuario = $usuarioData['tipo'] ?? null;
+        $usuarioId = $usuarioData['id'] ?? null;
+
+        $propostasEmpresa = [];
+
+        if ($usuario === 'empresa' && $usuarioId) {
+            $empresa = $this->empresaModel
+                ->where('fk_usuarios_id', $usuarioId)
+                ->first();
+
+            if ($empresa) {
+                $propostasEmpresa = $this->propostaModel
+                    ->where('fk_empresas_id', $empresa['id'])
+                    ->findAll();
+            }
+        }
+
+
         $filtros = [
             'categoria' => $this->request->getGet('categoria'),
             'valor_min' => $this->request->getGet('valor_min'),
@@ -46,6 +70,8 @@ class Home extends BaseController
         $totalFreela = $this->freelancerModel->countFiltered($filtros);
 
         return view('home/listafreela', [
+            'usuario' => $usuario,
+            'propostasEmpresa' => $propostasEmpresa,
             'freelancers' => $freelancers,
             'pager' => $this->freelancerModel->pager,
             'totalFreela' => $totalFreela,

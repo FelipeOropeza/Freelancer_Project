@@ -51,6 +51,11 @@
         box-shadow: 0 0 5px rgba(217, 30, 92, 0.5);
         background-color: #fff;
     }
+
+    .list-group-item-action:hover {
+        background-color: #fce4ec !important;
+        cursor: pointer;
+    }
 </style>
 <?= $this->endSection() ?>
 
@@ -177,7 +182,17 @@
                                 </div>
                                 <div class="items-link items-link2 f-right" style="margin-left: 20px;">
                                     <a href="#">Ver Detalhes</a>
+
+                                    <?php if ($usuario === 'empresa'): ?>
+                                        <?php if ($usuario === 'empresa'): ?>
+                                            <a href="#" data-toggle="modal" data-target="#modalPropostas"
+                                                data-freelancer-id="<?= $freelancer['id'] ?>"> Enviar Proposta
+                                            </a>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
                                 </div>
+
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -201,6 +216,45 @@
         </div>
     </div>
 <?php endif; ?>
+
+<!-- Modal Enviar Proposta -->
+<div class="modal fade" id="modalPropostas" tabindex="-1" role="dialog" aria-labelledby="modalPropostasLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPropostasLabel">Escolher Proposta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php if (!empty($propostasEmpresa)): ?>
+                    <form action="<?= base_url('/enviar-proposta') ?>" method="post">
+                        <input type="hidden" name="freelancer_id" id="modalFreelancerId">
+                        <div class="list-group">
+                            <?php foreach ($propostasEmpresa as $proposta): ?>
+                                <label class="list-group-item">
+                                    <input class="form-check-input mr-2" type="radio" name="proposta_id"
+                                        value="<?= esc($proposta['id']) ?>" required>
+                                    <strong><?= esc($proposta['descricao']) ?></strong><br>
+                                    <small><?= esc($proposta['endereco']) ?></small>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="mt-3 text-right">
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                <?php else: ?>
+                    <p>Você ainda não cadastrou propostas. <a href="<?= base_url('/minhas-propostas') ?>">Clique aqui para
+                            adicionar uma.</a></p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?= $this->endSection() ?>
 
