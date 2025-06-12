@@ -230,7 +230,7 @@
             </div>
             <div class="modal-body">
                 <?php if (!empty($propostasEmpresa)): ?>
-                    <form action="<?= base_url('/enviar-proposta') ?>" method="post">
+                    <form action="<?= url_to('enviar-proposta') ?>" method="post">
                         <input type="hidden" name="freelancer_id" id="modalFreelancerId">
                         <div class="list-group">
                             <?php foreach ($propostasEmpresa as $proposta): ?>
@@ -260,6 +260,7 @@
 
 <?= $this->section('javascript') ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const slider = document.getElementById('range-slider');
 
@@ -293,5 +294,11 @@
     inputMax.addEventListener('change', function () {
         slider.noUiSlider.set([null, this.value]);
     });
+
+    $(document).on('click', '[data-target="#modalPropostas"]', function () {
+        const freelancerId = $(this).data('freelancer-id');
+        $('#modalFreelancerId').val(freelancerId);
+    });
+
 </script>
 <?= $this->endSection() ?>

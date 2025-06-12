@@ -11,7 +11,7 @@ class Home extends BaseController
 {
     private $freelancerModel;
     private $propostaModel;
-        private $empresaModel;
+    private $empresaModel;
 
     public function __construct()
     {
@@ -45,7 +45,6 @@ class Home extends BaseController
                     ->findAll();
             }
         }
-
 
         $filtros = [
             'categoria' => $this->request->getGet('categoria'),

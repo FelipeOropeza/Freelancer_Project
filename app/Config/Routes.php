@@ -19,3 +19,4 @@ $routes->get('/perfil-empresa', 'Empresa::index', ['as' => 'empresa_perfil']);
 $routes->post('/perfil-empresa/salvar', 'Empresa::salvarInfo', ['as' => 'empresa_info']);
 $routes->get('/proposta-empresa', 'Empresa::proposta', ['as' => 'empresa_proposta']);
 $routes->post('/proposta-empresa/salvar', 'Empresa::salvarProposta', ['as' => 'empresa_proposta_salvar']);
+$routes->post('/enviar-proposta', 'Empresa::enviarProposta', ['as' => 'enviar-proposta']);
