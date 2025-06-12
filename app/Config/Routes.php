@@ -20,3 +20,5 @@ $routes->post('/perfil-empresa/salvar', 'Empresa::salvarInfo', ['as' => 'empresa
 $routes->get('/proposta-empresa', 'Empresa::proposta', ['as' => 'empresa_proposta']);
 $routes->post('/proposta-empresa/salvar', 'Empresa::salvarProposta', ['as' => 'empresa_proposta_salvar']);
 $routes->post('/enviar-proposta', 'Empresa::enviarProposta', ['as' => 'enviar-proposta']);
+
+$routes->get('/perfil-freelancer', 'Freelancer::index', ['as' => 'freelancer_perfil']);

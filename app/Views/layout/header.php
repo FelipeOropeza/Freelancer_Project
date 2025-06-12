@@ -47,7 +47,7 @@
                                                 <a class="dropdown-item" href="<?= url_to("empresa_perfil") ?>">Área da
                                                     Empresa</a>
                                             <?php elseif ($tipoUsuario === 'freelancer'): ?>
-                                                <a class="dropdown-item" href="#">Área do Freelancer</a>
+                                                <a class="dropdown-item" href="<?= url_to("freelancer_perfil") ?>">Área do Freelancer</a>
                                             <?php endif; ?>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger"
