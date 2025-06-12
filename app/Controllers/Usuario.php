@@ -24,7 +24,6 @@ class Usuario extends BaseController
         $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
         $this->email = service('email');
-
     }
 
     public function cadastro()
@@ -92,7 +91,7 @@ class Usuario extends BaseController
                 'parametro' => $dadosForm['email']
             ];
 
-            $mensagem = view('emails/template', $dados);
+            $mensagem = view('emails/validaEmail', $dados);
 
             $this->email->setFrom('felipe2006.co@gmail.com', 'Job Flnder');
             $this->email->setTo($dadosForm['email']);
