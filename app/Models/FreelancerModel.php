@@ -95,4 +95,28 @@ class FreelancerModel extends Model
 
         return $query->countAllResults();
     }
+
+    public function getFreelancerComUsuario($freelancerId = null)
+    {
+        $builder = $this->select('
+            usuarios.nome, 
+            usuarios.email, 
+            freelancers.cpf, 
+            freelancers.descricao, 
+            freelancers.telefone, 
+            freelancers.site, 
+            freelancers.endereco,
+            freelancers.especialidades,
+            freelancers.dias_disponiveis,
+            freelancers.valor_diaria,
+            freelancers.curriculo
+        ')->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id');
+
+        if ($freelancerId !== null) {
+            $builder->where('freelancers.fk_usuarios_id', $freelancerId);
+            return $builder->get()->getRow();
+        }
+
+        return $builder->get()->getResult();
+    }
 }
