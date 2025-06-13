@@ -47,10 +47,10 @@
                 </div>
                 <div class="w-100 mt-2 d-flex">
                     <!-- <button class="btn btn-warning btn-sm mr-2 btn-xs" data-toggle="modal" data-target="#modalFormulario"> -->
-                    <button class="btn btn-warning btn-sm mr-2 btn-xs">
+                    <button class="btn-warning btn-sm mr-2 btn-xs">
                         <small>Atualizar</small>
                     </button>
-                    <a href="#" class="btn btn-danger btn-sm btn-xs">
+                    <a href="#" class="btn-danger btn-sm btn-xs">
                         <small>Excluir</small>
                     </a>
                 </div>

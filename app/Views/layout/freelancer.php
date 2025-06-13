@@ -9,7 +9,7 @@
                     <h5 class="card-title">Área do Freelancer</h5>
                     <ul class="list-unstyled">
                         <li><a style="color: #fb246a;" href="<?= url_to("freelancer_perfil") ?>">Meu Perfil</a></li>
-                        <li><a style="color: #fb246a;" href="#">Propostas</a></li>
+                        <li><a style="color: #fb246a;" href="<?= url_to("freelancer_proposta") ?>">Propostas</a></li>
                     </ul>
                 </div>
             </div>
