@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\EmailModel;
 use App\Models\FreelancerModel;
 use App\Models\PropostaFreelancerModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,10 +12,15 @@ class Freelancer extends BaseController
 {
     private $freelancerModel;
     private $propostafreelancerModel;
+    private $emailModel;
+    private $db;
+
     public function __construct()
     {
         $this->freelancerModel = new FreelancerModel();
         $this->propostafreelancerModel = new PropostaFreelancerModel();
+        $this->emailModel = new EmailModel();
+        $this->db = \Config\Database::connect();
     }
 
     public function index()
@@ -85,5 +91,69 @@ class Freelancer extends BaseController
         ];
 
         return view('freelancer/proposta', $dados);
+    }
+
+    public function aceitarProposta($id)
+    {
+        $this->db->transStart();
+
+        try {
+            $freelancerUsuario = session()->get('usuario');
+            $empresaUsuario = $this->propostafreelancerModel->getUsuarioIdByPropostaId($id);
+
+            foreach ([$freelancerUsuario, $empresaUsuario] as $usuario) {
+                $this->emailModel->insert([
+                    'assunto' => 'Geração de Contrato',
+                    'mensagem' => 'O contrato foi gerado com sucesso.',
+                    'data_envio' => date('Y-m-d'),
+                    'fk_usuarios_id' => $usuario['id']
+                ]);
+            }
+
+            $this->propostafreelancerModel->aceitarProposta($id);
+
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                throw new \Exception('Erro na transação com o banco de dados.');
+            }
+
+            $emailService = service('emailNotificacao');
+
+            $emailService->enviar([
+                'email' => $freelancerUsuario['email'],
+                'titulo' => 'Proposta aceita!',
+                'mensagem' => 'Uma proposta foi aceita e o contrato já está disponível para você.',
+                'link_text' => 'Ver contratos',
+                'parametro' => $freelancerUsuario['email'],
+                'tipo' => 'freelancer',
+                'assunto' => 'Contrato gerado'
+            ]);
+
+            $emailService->enviar([
+                'email' => $empresaUsuario['email'],
+                'titulo' => 'Olá, tudo certo?',
+                'mensagem' => 'Você enviou uma proposta e ela foi aceita.',
+                'link_text' => 'Ver contratos',
+                'parametro' => $empresaUsuario['email'],
+                'tipo' => 'empresa',
+                'assunto' => 'Contrato gerado'
+            ]);
+
+            return redirect()->to(route_to('freelancer_proposta'))->with('success', 'Proposta aceita com sucesso.');
+
+        } catch (\Throwable $e) {
+            $this->db->transRollback();
+            log_message('error', 'Erro ao aceitar proposta: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Ocorreu um erro ao aceitar a proposta. Tente novamente.');
+        }
+    }
+
+
+    public function recusarProposta($id)
+    {
+        $this->propostafreelancerModel->recusarProposta($id);
+        return redirect()->to(route_to('freelancer_proposta'))->with('success', 'Proposta recusada com sucesso.');
     }
 }

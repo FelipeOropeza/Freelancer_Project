@@ -46,9 +46,30 @@ class PropostaFreelancerModel extends Model
 
     public function getPropostasDetalhadasByFreelancer($freelancerId)
     {
-        return $this->select('propostas.descricao, propostas.endereco, propostas.tipo, propostas.valor, proposta_freelancer.status')
+        return $this->select('propostas.descricao, propostas.endereco, propostas.tipo, propostas.valor, proposta_freelancer.status, proposta_freelancer.id')
             ->join('propostas', 'propostas.id = proposta_freelancer.fk_propostas_id')
             ->where('proposta_freelancer.fk_freelancers_id', $freelancerId)
             ->findAll();
+    }
+
+    public function getUsuarioIdByPropostaId($id)
+    {
+        return $this->select('usuarios.id, usuarios.email')
+            ->join('propostas', 'propostas.id = proposta_freelancer.fk_propostas_id')
+            ->join('empresas', 'empresas.id = propostas.fk_empresas_id')
+            ->join('usuarios', 'usuarios.id = empresas.fk_usuarios_id')
+            ->where('proposta_freelancer.id', $id)
+            ->get()
+            ->getRowArray();
+    }
+
+    public function aceitarProposta($id)
+    {
+        return $this->update($id, ['status' => 'aceita']);
+    }
+
+    public function recusarProposta($id)
+    {
+        return $this->update($id, ['status' => 'recusada']);
     }
 }

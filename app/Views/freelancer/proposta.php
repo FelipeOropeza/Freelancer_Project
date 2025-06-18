@@ -28,11 +28,11 @@
                 </div>
                 <div class="w-100 mt-2 d-flex">
                     <?php if ($proposta['status'] === 'pendente'): ?>
-                        <form action="#" method="post" style="display:inline;">
+                        <form action="<?= route_to("proposta_aceitar", $proposta['id']) ?>" method="post" style="display:inline;">
                             <?= csrf_field() ?>
                             <button class="btn-success btn-sm mr-2 btn-xs">Aceitar</button>
                         </form>
-                        <form action="#" method="post" style="display:inline;">
+                        <form action="<?= route_to("proposta_recusar", $proposta['id']) ?>" method="post" style="display:inline;">
                             <?= csrf_field() ?>
                             <button class="btn-danger btn-sm mr-2 btn-xs">Recusar</button>
                         </form>

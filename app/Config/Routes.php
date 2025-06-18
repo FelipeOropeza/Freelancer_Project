@@ -25,4 +25,5 @@ $routes->get('/perfil-freelancer', 'Freelancer::index', ['as' => 'freelancer_per
 $routes->post('/perfil-freelancer/salvar', 'Freelancer::salvarInfo', ['as' => 'freelancer_info']);
 $routes->get('/perfil-freelancer/curriculo/(:any)', 'Freelancer::visualizarCurriculo/$1', ['as' => 'ver_curriculo']);
 $routes->get('/proposta-freelancer', 'Freelancer::proposta', ['as' => 'freelancer_proposta']);
-
+$routes->post('/proposta-freelancer/aceitar/(:num)', 'Freelancer::aceitarProposta/$1', ['as' => 'proposta_aceitar']);
+$routes->post('/proposta-freelancer/recusar/(:num)', 'Freelancer::recusarProposta/$1', ['as' => 'proposta_recusar']);
