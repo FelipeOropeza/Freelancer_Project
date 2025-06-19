@@ -14,7 +14,7 @@ class Usuario extends BaseController
     private $freelancerModel;
     private $emailModel;
     private $db;
-    private $email;
+    private $emailService;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Usuario extends BaseController
         $this->freelancerModel = new FreelancerModel();
         $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
-        $this->email = service('email');
+        $this->emailService = service('emailNotificacao');
     }
 
     public function cadastro()
@@ -84,21 +84,16 @@ class Usuario extends BaseController
 
             $this->db->transCommit();
 
-            $dados = [
-                'titulo' => 'Olá, tudo certo?',
-                'mensagem' => 'Click no botão abaixo pra validar seu e-maiil.',
+            $this->emailService->enviar([
+                'email' => $dadosForm['email'],
+                'titulo' => 'Bem-vindo ao Job Finder',
+                'mensagem' => 'Para completar o cadastro, por favor, verifique seu e-mail.',
                 'link_text' => 'Validar e-mail',
-                'parametro' => $dadosForm['email']
-            ];
-
-            $mensagem = view('emails/validaEmail', $dados);
-
-            $this->email->setFrom('felipe2006.co@gmail.com', 'Job Flnder');
-            $this->email->setTo($dadosForm['email']);
-            $this->email->setSubject('Verificação do e-email');
-            $this->email->setMessage($mensagem);
-
-            $this->email->send();
+                'parametro' => $dadosForm['email'],
+                'tipo' => $dadosForm['tipo'],
+                'assunto' => 'Verificação de E-mail',
+                'view' => 'emails/validaEmail'
+            ]);
 
             return redirect()->to('/login')->with('success', 'Pra completar o cadastro verifique o seu e-mail!');
 

@@ -14,6 +14,7 @@ class Freelancer extends BaseController
     private $propostafreelancerModel;
     private $emailModel;
     private $db;
+    private $emailService;
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class Freelancer extends BaseController
         $this->propostafreelancerModel = new PropostaFreelancerModel();
         $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
+        $this->emailService = service('emailNotificacao');
     }
 
     public function index()
@@ -118,26 +120,26 @@ class Freelancer extends BaseController
                 throw new \Exception('Erro na transação com o banco de dados.');
             }
 
-            $emailService = service('emailNotificacao');
-
-            $emailService->enviar([
+            $this->emailService->enviar([
                 'email' => $freelancerUsuario['email'],
                 'titulo' => 'Proposta aceita!',
                 'mensagem' => 'Uma proposta foi aceita e o contrato já está disponível para você.',
                 'link_text' => 'Ver contratos',
                 'parametro' => $freelancerUsuario['email'],
                 'tipo' => 'freelancer',
-                'assunto' => 'Contrato gerado'
+                'assunto' => 'Contrato gerado',
+                'view' => 'emails/contrato'
             ]);
 
-            $emailService->enviar([
+            $this->emailService->enviar([
                 'email' => $empresaUsuario['email'],
                 'titulo' => 'Olá, tudo certo?',
                 'mensagem' => 'Você enviou uma proposta e ela foi aceita.',
                 'link_text' => 'Ver contratos',
                 'parametro' => $empresaUsuario['email'],
                 'tipo' => 'empresa',
-                'assunto' => 'Contrato gerado'
+                'assunto' => 'Contrato gerado',
+                'view' => 'emails/contrato'
             ]);
 
             return redirect()->to(route_to('freelancer_proposta'))->with('success', 'Proposta aceita com sucesso.');

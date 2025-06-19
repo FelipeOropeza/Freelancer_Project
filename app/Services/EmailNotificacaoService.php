@@ -13,7 +13,9 @@ class EmailNotificacaoService
 
     public function enviar(array $dados): bool
     {
-        $html = view('emails/contrato', [
+        $view = $dados['view'];
+
+        $html = view($view, [
             'titulo' => $dados['titulo'],
             'mensagem' => $dados['mensagem'],
             'link_text' => $dados['link_text'],
