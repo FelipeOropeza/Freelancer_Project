@@ -16,6 +16,7 @@ class UsuarioSeeder extends Seeder
                 'email'        => $faker->unique()->safeEmail,
                 'senha'        => password_hash('123456', PASSWORD_DEFAULT),
                 'tipo'         => 'freelancer',
+                'data_criacao' => date('Y-m-d'),
                 'email_valido' => 1,
                 'conduta'      => 0,
             ];

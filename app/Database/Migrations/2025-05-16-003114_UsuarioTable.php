@@ -35,6 +35,10 @@ class UsuarioTable extends Migration
                 'type' => "ENUM('admin','empresa','freelancer')",
                 'null' => false,
             ],
+            'data_criacao' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
             'email_valido' => [
                 'type' => 'BOOLEAN',
                 'default' => 0,

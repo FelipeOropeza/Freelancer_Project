@@ -15,6 +15,10 @@ class PropostaTable extends Migration
                 'auto_increment' => true,
                 'unsigned' => true,
             ],
+            'titulo' => [
+                'type' => 'TEXT',
+                'null' => false,
+            ],
             'descricao' => [
                 'type' => 'TEXT',
                 'null' => false,
@@ -22,6 +26,14 @@ class PropostaTable extends Migration
             'valor' => [
                 'type' => 'DECIMAL',
                 'constraint' => '8,2',
+                'null' => false,
+            ],
+            'data_inicio' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
+            'data_conclusao' => [
+                'type' => 'DATETIME',
                 'null' => false,
             ],
             'tipo' => [
