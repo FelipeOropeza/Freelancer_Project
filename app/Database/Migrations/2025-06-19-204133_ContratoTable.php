@@ -14,7 +14,12 @@ class ContratoTable extends Migration
                 'unsigned'      => true,
                 'auto_increment' => true,
             ],
-            'status' => [
+            'assinatura_freelancer' => [
+                'type' => "ENUM('pendente','aceito','recusada')",
+                'null' => false,
+                'default' => 'pendente',
+            ],
+            'assinatura_empresa' => [
                 'type' => "ENUM('pendente','aceito','recusada')",
                 'null' => false,
                 'default' => 'pendente',

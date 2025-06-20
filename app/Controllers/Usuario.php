@@ -41,6 +41,7 @@ class Usuario extends BaseController
             if (!empty($dadosForm['cpf'])) {
                 $dadosForm['cpf'] = str_replace(['.', '-'], '', $dadosForm['cpf']);
                 $dadosForm['tipo'] = 'freelancer';
+                $dadosForm['data_criacao'] = date('Y-m-d');
                 $id = $this->usuarioModel->insert($dadosForm);
 
                 if ($id === false) {
@@ -59,6 +60,7 @@ class Usuario extends BaseController
             } else {
                 $dadosForm['cnpj'] = str_replace(['.', '-', '/'], '', $dadosForm['cnpj']);
                 $dadosForm['tipo'] = 'empresa';
+                $dadosForm['data_criacao'] = date('Y-m-d');
                 $id = $this->usuarioModel->insert($dadosForm);
 
                 if ($id === false) {
@@ -79,7 +81,7 @@ class Usuario extends BaseController
                 'assunto' => 'Verificação Email',
                 'mensagem' => 'É preciso verificar o email pra entrar no website',
                 'data_envio' => date('Y-m-d'),
-                'fk_usuarios_id'=> $id
+                'fk_usuarios_id' => $id
             ]);
 
             $this->db->transCommit();

@@ -37,12 +37,15 @@
         <div class="list-group-item mb-2 shadow-sm">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div>
-                    <h5 class="mb-1"><?= esc($proposta['descricao']) ?></h5>
+                    <h5 class="mb-1"><?= esc($proposta['titulo']) ?></h5>
+                    <small class="text-muted"><?= esc($proposta['descricao']) ?></small>
                     <p class="mb-1">
                         <strong>Valor:</strong> R$<?= number_format($proposta['valor'], 2, ',', '.') ?> |
                         <strong>Tipo:</strong>
                         <span class="badge badge-info"><?= strtoupper($proposta['tipo']) ?></span> |
                         <strong>Endereço:</strong> <?= esc($proposta['endereco']) ?>
+                        <?= date('d/m/Y', strtotime($proposta['data_inicio'])) ?> -
+                        <?= date('d/m/Y', strtotime($proposta['data_conclusao'])) ?>
                     </p>
                 </div>
                 <div class="w-100 mt-2 d-flex">
@@ -73,36 +76,59 @@
                 </div>
 
                 <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="titulo">Título<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" name="titulo" id="titulo" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="valor">Valor (R$)<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control form-control-sm" name="valor" id="valor"
+                                step="0.01" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="tipo" style="display:block; margin-bottom:5px;">Tipo<span
+                                    class="text-danger">*</span></label>
+                            <select name="tipo" id="tipo" class="form-control form-control-sm" required>
+                                <option value="">Selecione</option>
+                                <option value="remoto">Remoto</option>
+                                <option value="presencial">Presencial</option>
+                                <option value="hibrido">Híbrido</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="endereco">Endereço<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" name="endereco" id="endereco"
+                                required>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="descricao">Descrição<span class="text-danger">*</span></label>
-                        <textarea class="form-control" name="descricao" id="descricao" rows="2" required></textarea>
+                        <textarea class="form-control form-control-sm" name="descricao" id="descricao" rows="2"
+                            required></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="valor">Valor (R$)<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" name="valor" id="valor" step="0.01" min="0" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tipo" style="display:block; margin-bottom:5px;">Tipo<span
-                                class="text-danger">*</span></label>
-                        <select name="tipo" id="tipo" required>
-                            <option value="">Selecione</option>
-                            <option value="remoto">Remoto</option>
-                            <option value="presencial">Presencial</option>
-                            <option value="hibrido">Híbrido</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div class="form-group" style="margin-top: 20px;">
-                        <label for="endereco">Endereço<span class="text-danger">*</span></label>
-                        <textarea class="form-control" name="endereco" id="endereco" rows="2"></textarea>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="data_inicio">Data de Início<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control form-control-sm" name="data_inicio" id="data_inicio"
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="data_conclusao">Data de Conclusão<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control form-control-sm" name="data_conclusao"
+                                id="data_conclusao" required>
+                        </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
                 </div>
             </form>
         </div>

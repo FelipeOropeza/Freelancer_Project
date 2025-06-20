@@ -46,7 +46,7 @@ class PropostaFreelancerModel extends Model
 
     public function getPropostasDetalhadasByFreelancer($freelancerId)
     {
-        return $this->select('propostas.descricao, propostas.endereco, propostas.tipo, propostas.valor, proposta_freelancer.status, proposta_freelancer.id')
+        return $this->select('propostas.titulo, propostas.descricao, propostas.endereco, propostas.data_inicio, propostas.data_conclusao, propostas.tipo, propostas.valor, proposta_freelancer.status, proposta_freelancer.id')
             ->join('propostas', 'propostas.id = proposta_freelancer.fk_propostas_id')
             ->where('proposta_freelancer.fk_freelancers_id', $freelancerId)
             ->findAll();

@@ -122,8 +122,11 @@ class Empresa extends BaseController
         }
 
         $this->propostaModel->insert([
+            'titulo' => $dadosForm['titulo'],
             'descricao' => $dadosForm['descricao'],
             'valor' => $dadosForm['valor'],
+            'data_inicio' => $dadosForm['data_inicio'],
+            'data_conclusao' => $dadosForm['data_conclusao'],
             'tipo' => $dadosForm['tipo'],
             'endereco' => $dadosForm['endereco'],
             'fk_empresas_id' => $empresaId

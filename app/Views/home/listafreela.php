@@ -233,8 +233,9 @@
                                     <label class="list-group-item">
                                         <input class="form-check-input mr-2" type="radio" name="proposta_id"
                                             value="<?= esc($proposta['id']) ?>" required>
-                                        <strong><?= esc($proposta['descricao']) ?></strong><br>
-                                        <small><?= esc($proposta['endereco']) ?></small>
+                                        <strong><?= esc($proposta['titulo']) ?></strong><br>
+                                        <small><?= esc($proposta['descricao']) ?></small><br>
+                                        <small class="text-muted"><?= esc($proposta['endereco']) ?></small>
                                     </label>
                                 <?php endforeach; ?>
                             </div>

@@ -18,12 +18,18 @@
         <?php foreach ($propostas as $proposta): ?>
             <div class="list-group-item mb-2 shadow-sm d-flex justify-content-between align-items-center flex-wrap">
                 <div>
-                    <h5 class="mb-1"><?= esc($proposta['descricao']) ?></h5>
+                    <h5 class="mb-1"><?= esc($proposta['titulo']) ?></h5>
+                    <p class="mb-1"><?= esc($proposta['descricao']) ?></p>
                     <p class="mb-1">
                         <strong>Local:</strong> <?= esc($proposta['endereco']) ?> |
                         <strong>Tipo:</strong> <?= ucfirst(esc($proposta['tipo'])) ?> |
                         <strong>Valor:</strong> R$ <?= number_format($proposta['valor'], 2, ',', '.') ?> |
-                        <strong>Status:</strong> <?= esc($proposta['status']) ?>
+                        <strong>Status:</strong> <?= ucfirst(esc($proposta['status'])) ?>
+                    </p>
+                    <p class="mb-0">
+                        <strong>Período:</strong>
+                        <?= date('d/m/Y', strtotime($proposta['data_inicio'])) ?> até
+                        <?= date('d/m/Y', strtotime($proposta['data_conclusao'])) ?>
                     </p>
                 </div>
                 <div class="w-100 mt-2 d-flex">
