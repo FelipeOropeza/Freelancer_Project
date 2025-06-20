@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ContratoModel;
 use App\Models\EmailModel;
+use App\Models\EmpresaModel;
 use App\Models\FreelancerModel;
 use App\Models\PropostaFreelancerModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,7 +13,9 @@ use CodeIgniter\HTTP\ResponseInterface;
 class Freelancer extends BaseController
 {
     private $freelancerModel;
+    private $empresaModel;
     private $propostafreelancerModel;
+    private $contratoModel;
     private $emailModel;
     private $db;
     private $emailService;
@@ -19,6 +23,8 @@ class Freelancer extends BaseController
     public function __construct()
     {
         $this->freelancerModel = new FreelancerModel();
+        $this->empresaModel = new EmpresaModel();
+        $this->contratoModel = new ContratoModel();
         $this->propostafreelancerModel = new PropostaFreelancerModel();
         $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
@@ -113,6 +119,22 @@ class Freelancer extends BaseController
             }
 
             $this->propostafreelancerModel->aceitarProposta($id);
+
+            $idEmpresa = $this->empresaModel
+                ->where('fk_usuarios_id', $empresaUsuario['id'])
+                ->select('id')
+                ->first()['id'];
+
+            $idFreelancer = $this->freelancerModel
+                ->where('fk_usuarios_id', $freelancerUsuario['id'])
+                ->select('id')
+                ->first()['id'];
+
+            $this->contratoModel->insert([
+                'fk_proposta_freelancer_id' => $id,
+                'fk_empresa_id' => $idEmpresa,
+                'fk_freelancer_id' => $idFreelancer
+            ]);
 
             $this->db->transComplete();
 
