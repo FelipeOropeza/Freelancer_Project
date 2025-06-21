@@ -19,6 +19,7 @@ class Freelancer extends BaseController
     private $emailModel;
     private $db;
     private $emailService;
+    private $pdfService;
 
     public function __construct()
     {
@@ -29,6 +30,7 @@ class Freelancer extends BaseController
         $this->emailModel = new EmailModel();
         $this->db = \Config\Database::connect();
         $this->emailService = service('emailNotificacao');
+        $this->pdfService = service('pdf');
     }
 
     public function index()
@@ -106,6 +108,11 @@ class Freelancer extends BaseController
         $this->db->transStart();
 
         try {
+            $nomeFreelancer = session()->get('usuario')['nome'];
+
+            $dadosProjeto  = $this->propostafreelancerModel->getInformacoesContrato($id);
+            $nomeArquivoPdf = $this->pdfService->gerarContrato($dadosProjeto, $nomeFreelancer);
+
             $freelancerUsuario = session()->get('usuario');
             $empresaUsuario = $this->propostafreelancerModel->getUsuarioIdByPropostaId($id);
 
@@ -131,6 +138,7 @@ class Freelancer extends BaseController
                 ->first()['id'];
 
             $this->contratoModel->insert([
+                'contrato' => $nomeArquivoPdf,
                 'fk_proposta_freelancer_id' => $id,
                 'fk_empresa_id' => $idEmpresa,
                 'fk_freelancer_id' => $idFreelancer

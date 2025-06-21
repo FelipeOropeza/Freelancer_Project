@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Services\EmailNotificacaoService;
+use App\Services\PdfService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -27,5 +28,14 @@ class Services extends BaseService
         }
 
         return new EmailNotificacaoService();
+    }
+
+    public static function pdf(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('pdf');
+        }
+
+        return new PdfService();
     }
 }

@@ -53,7 +53,7 @@
     <p><?= $mensagem ?></p>
 
     <?php if (isset($link_text) && isset($tipo)): ?>
-      <a class="btn" href="<?= site_url($tipo === 'empresa' ? '/empresa/contratos' : '/freelancer/propostas') ?>" target="_blank">
+      <a class="btn" href="<?= site_url($tipo === 'empresa' ? '/contrato-empresa' : '/contrato-freelancer') ?>" target="_blank">
         <?= $link_text ?>
       </a>
     <?php endif; ?>

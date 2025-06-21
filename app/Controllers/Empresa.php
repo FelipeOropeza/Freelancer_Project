@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ContratoModel;
 use App\Models\EmailModel;
 use App\Models\EmpresaModel;
 use App\Models\PropostaFreelancerModel;
@@ -18,6 +19,7 @@ class Empresa extends BaseController
     private $propostaModel;
     private $propostafreelancerModel;
     private $emailModel;
+    private $contratoModel;
     private $emailService;
 
     public function __construct()
@@ -27,6 +29,7 @@ class Empresa extends BaseController
         $this->usuarioModel = new UsuarioModel();
         $this->propostaModel = new PropostaModel();
         $this->propostafreelancerModel = new PropostaFreelancerModel();
+        $this->contratoModel = new ContratoModel();
         $this->emailModel = new EmailModel();
         $this->emailService = service('emailNotificacao');
     }
@@ -181,5 +184,21 @@ class Empresa extends BaseController
             $this->db->transRollback();
             return redirect()->back()->with('erro', 'Erro: ' . $e->getMessage());
         }
+    }
+
+    public function contrato()
+    {
+        $empresa = $this->empresaModel
+            ->where('fk_usuarios_id', session()->get('usuario')['id'])
+            ->select('id')
+            ->first();
+
+        $empresaId = $empresa['id'] ?? null;
+
+        $cotratos = $this->contratoModel
+            ->where('fk_empresa_id', $empresaId)
+            ->findAll();
+
+        return view('empresa/contrato');
     }
 }

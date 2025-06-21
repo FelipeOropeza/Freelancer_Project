@@ -52,6 +52,16 @@ class PropostaFreelancerModel extends Model
             ->findAll();
     }
 
+    public function getInformacoesContrato($id)
+    {
+        return $this->select('usuarios.nome, propostas.titulo, propostas.descricao, propostas.endereco, propostas.data_inicio, propostas.data_conclusao, propostas.tipo, propostas.valor, proposta_freelancer.status, proposta_freelancer.id')
+            ->join('propostas', 'propostas.id = proposta_freelancer.fk_propostas_id')
+            ->join('empresas', 'empresas.id = propostas.fk_empresas_id')
+            ->join('usuarios', 'usuarios.id = empresas.fk_usuarios_id')
+            ->where('proposta_freelancer.id', $id)
+            ->findAll();
+    }
+
     public function getUsuarioIdByPropostaId($id)
     {
         return $this->select('usuarios.id, usuarios.email')

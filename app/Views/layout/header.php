@@ -34,20 +34,29 @@
                             <div class="header-btn d-none d-lg-block">
                                 <?php if (session()->has('usuario')): ?>
                                     <?php
-                                    $nomeUsuario = is_array($usuario) ? ($usuario['nome'] ?? 'Usuário') : ($usuario->nome ?? 'Usuário');
-                                    ?>
+                                    $nomeCompleto = is_array($usuario)
+                                        ? ($usuario['nome'] ?? '')
+                                        : ($usuario->nome ?? '');
+
+                                    $partesNome = explode(' ', trim($nomeCompleto));
+                                    $primeiroNome = $partesNome[0] ?? '';
+                                    $sobrenome = $partesNome[1] ?? '';
+                                    $nomeExibicao = $primeiroNome . ' ' . $sobrenome;
+
+                                    $nomeExibicao = trim($nomeExibicao) !== '' ? $nomeExibicao : 'Usuário'; ?>
                                     <div class="dropdown d-inline">
                                         <button class="btn btn-light dropdown-toggle fw-bold" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <?= esc($nomeUsuario) ?> (<?= esc($tipoUsuario) ?>)
+                                            <?= esc($nomeExibicao) ?> (<?= esc($tipoUsuario) ?>)
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <?php if ($tipoUsuario === 'empresa'): ?>
                                                 <a class="dropdown-item" href="<?= url_to("empresa_perfil") ?>">Área da
                                                     Empresa</a>
                                             <?php elseif ($tipoUsuario === 'freelancer'): ?>
-                                                <a class="dropdown-item" href="<?= url_to("freelancer_perfil") ?>">Área do Freelancer</a>
+                                                <a class="dropdown-item" href="<?= url_to("freelancer_perfil") ?>">Área do
+                                                    Freelancer</a>
                                             <?php endif; ?>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger"
@@ -76,7 +85,7 @@
 
                                     <?php if (session()->has('usuario')): ?>
                                         <li>
-                                            <strong><?= esc($nomeUsuario) ?> (<?= esc($tipoUsuario) ?>)</strong>
+                                            <strong><?= esc($nomeExibicao) ?> (<?= esc($tipoUsuario) ?>)</strong>
                                             <ul>
                                                 <?php if ($tipoUsuario === 'empresa'): ?>
                                                     <li><a href="#">Dashboard Empresa</a></li>
