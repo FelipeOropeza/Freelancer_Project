@@ -195,10 +195,34 @@ class Empresa extends BaseController
 
         $empresaId = $empresa['id'] ?? null;
 
-        $cotratos = $this->contratoModel
-            ->where('fk_empresa_id', $empresaId)
-            ->findAll();
+        $cotratos = $this->contratoModel->getContratosComFreelancers($empresaId);
 
-        return view('empresa/contrato');
+        return view('empresa/contrato', [
+            'contratos' => $cotratos
+        ]);
+    }
+
+    public function assinarContrato()
+    {
+        $dadosForm = $this->request->getPost();
+
+        $this->db->transBegin();
+
+        try {
+            $this->contratoModel->update($dadosForm['id'], [
+                'assinatura_empresa' => $dadosForm['resposta']
+            ]);
+            
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return redirect()->back()->with('erro', 'Erro ao assinar contrato.');
+            }
+
+            $this->db->transCommit();
+            return redirect()->back()->with('sucesso', 'Contrato assinado com sucesso!');
+        } catch (\Exception $e) {
+            $this->db->transRollback();
+            return redirect()->back()->with('erro', 'Erro: ' . $e->getMessage());
+        }
     }
 }

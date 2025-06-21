@@ -151,4 +151,20 @@ class Usuario extends BaseController
         session()->destroy();
         return redirect()->to('/')->with('sucesso', 'Sessão encerrada.');
     }
+
+
+    public function visualizarContrato($arquivo)
+    {
+        $caminho = FCPATH . 'uploads/contratos/' . $arquivo;
+
+        if (!file_exists($caminho)) {
+            return redirect()->back()->with('error', 'Currículo não encontrado.');
+        }
+
+        $dados = [
+            'arquivo' => $arquivo
+        ];
+
+        return view('usuario/ver_contrato', $dados);
+    }
 }

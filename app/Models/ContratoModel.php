@@ -43,4 +43,22 @@ class ContratoModel extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
+
+    public function getContratosComFreelancers(int $empresaId): array
+    {
+        return $this->select('contratos.*, usuarios.nome AS nome_freelancer')
+            ->join('freelancers', 'freelancers.id = contratos.fk_freelancer_id')
+            ->join('usuarios', 'usuarios.id = freelancers.fk_usuarios_id')
+            ->where('contratos.fk_empresa_id', $empresaId)
+            ->findAll();
+    }
+
+    public function getContratosComEmpresas(int $freelancerId): array
+    {
+        return $this->select('contratos.*, usuarios.nome AS nome_empresa')
+            ->join('empresas', 'empresas.id = contratos.fk_empresa_id')
+            ->join('usuarios', 'usuarios.id = empresas.fk_usuarios_id') // CORRETO AQUI
+            ->where('contratos.fk_freelancer_id', $freelancerId)
+            ->findAll();
+    }
 }

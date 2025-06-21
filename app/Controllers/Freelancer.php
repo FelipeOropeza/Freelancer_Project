@@ -188,4 +188,50 @@ class Freelancer extends BaseController
         $this->propostafreelancerModel->recusarProposta($id);
         return redirect()->to(route_to('freelancer_proposta'))->with('success', 'Proposta recusada com sucesso.');
     }
+
+    public function contrato()
+    {
+        $freelancer = $this->freelancerModel
+            ->where('fk_usuarios_id', session()->get('usuario')['id'])
+            ->select('id')
+            ->first();
+
+        $contratos = $this->contratoModel->getContratosComEmpresas($freelancer['id']);
+
+        return view('freelancer/contrato', [
+            'contratos' => $contratos
+        ]);
+    }
+
+    public function assinarContrato()
+    {
+        $id = $this->request->getPost('id');
+        $resposta = $this->request->getPost('resposta');
+
+        if (!$id || !$resposta) {
+            return redirect()->back()->with('error', 'Dados inválidos.');
+        }
+
+        $this->db->transStart();
+
+        try {
+            $this->contratoModel->update($id, [
+                'assinatura_freelancer' => $resposta
+            ]);
+
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false) {
+                throw new \Exception('Erro na transação com o banco de dados.');
+            }
+
+            return redirect()->to(route_to('freelancer_contrato'))->with('success', 'Resposta enviada com sucesso.');
+
+        } catch (\Throwable $e) {
+            $this->db->transRollback();
+            log_message('error', 'Erro ao responder contrato: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Ocorreu um erro ao responder o contrato. Tente novamente.');
+        }
+    }
 }

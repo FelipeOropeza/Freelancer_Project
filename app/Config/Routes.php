@@ -11,6 +11,7 @@ $routes->get("/cadastro", "Usuario::cadastro", ['as' => "cadasto_user"]);
 $routes->post("/cadastro", "Usuario::criarUsuario", ['as' => "criar_user"]);
 $routes->get("/login", "Usuario::login", ['as' => "login_user"]);
 $routes->post("/login", "Usuario::autenticar", ['as' => "autenticar_user"]);
+$routes->get('/contrato/visualizar/(:any)', 'Usuario::visualizarContrato/$1', ['as' => 'ver_contrato']);
 
 $routes->get('/valida/email', 'Usuario::validaEmail', ['as' => 'valida_email']);
 $routes->get("/logout", "Usuario::logout", ['as' => "logout_user"]);
@@ -20,7 +21,8 @@ $routes->post('/perfil-empresa/salvar', 'Empresa::salvarInfo', ['as' => 'empresa
 $routes->get('/proposta-empresa', 'Empresa::proposta', ['as' => 'empresa_proposta']);
 $routes->post('/proposta-empresa/salvar', 'Empresa::salvarProposta', ['as' => 'empresa_proposta_salvar']);
 $routes->post('/enviar-proposta', 'Empresa::enviarProposta', ['as' => 'enviar-proposta']);
-$routes->get('/contrato-empresa', 'Empresa::contrato', ['as' => 'empresa_contrato']);
+$routes->get('/contrato-empresa', 'Empresa::contrato', options: ['as' => 'empresa_contrato']);
+$routes->post('/contrato-empresa/assinar', 'Empresa::assinarContrato', ['as' => 'assinar_contrato_empresa']);
 
 $routes->get('/perfil-freelancer', 'Freelancer::index', ['as' => 'freelancer_perfil']);
 $routes->post('/perfil-freelancer/salvar', 'Freelancer::salvarInfo', ['as' => 'freelancer_info']);
@@ -29,3 +31,4 @@ $routes->get('/proposta-freelancer', 'Freelancer::proposta', ['as' => 'freelance
 $routes->post('/proposta-freelancer/aceitar/(:num)', 'Freelancer::aceitarProposta/$1', ['as' => 'proposta_aceitar']);
 $routes->post('/proposta-freelancer/recusar/(:num)', 'Freelancer::recusarProposta/$1', ['as' => 'proposta_recusar']);
 $routes->get('/contrato-freelancer', 'Freelancer::contrato', ['as' => 'freelancer_contrato']);
+$routes->post('/contrato-freelancer/assinar', 'Freelancer::assinarContrato', ['as' => 'assinar_contrato_freelancer']);
