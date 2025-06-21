@@ -24,6 +24,10 @@ class ContratoTable extends Migration
                 'null' => false,
                 'default' => 'pendente',
             ],
+            'contrato' => [
+                'type' => 'TEXT',
+                'null' => false,
+            ],
             'fk_empresa_id' => [
                 'type' => 'INT',
                 'unsigned' => true,

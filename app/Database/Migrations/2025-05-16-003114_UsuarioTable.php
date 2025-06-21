@@ -17,7 +17,7 @@ class UsuarioTable extends Migration
             ],
             'nome' => [
                 'type' => 'VARCHAR',
-                'constraint' => 30,
+                'constraint' => 55,
                 'null' => false,
             ],
             'email' => [

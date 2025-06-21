@@ -12,7 +12,7 @@ class ContratoModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['assinatura_freelancer', 'assinatura_empresa', 'fk_proposta_freelancer_id', 'fk_empresa_id', 'fk_freelancer_id'];
+    protected $allowedFields = ['assinatura_freelancer', 'assinatura_empresa', 'contrato', 'fk_proposta_freelancer_id', 'fk_empresa_id', 'fk_freelancer_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
