@@ -71,10 +71,10 @@
                     <?php if ($contrato['assinatura_freelancer'] === 'pendente'): ?>
                         <form action="<?= url_to('assinar_contrato_freelancer') ?>" method="post" class="d-inline">
                             <input type="hidden" name="id" value="<?= $contrato['id'] ?>">
-                            <button type="submit" name="resposta" value="aceito" class="btn btn-success btn-sm btn-xs mr-1">
+                            <button type="submit" name="resposta" value="aceito" class=" btn-success btn-sm btn-xs mr-1">
                                 Aceitar
                             </button>
-                            <button type="submit" name="resposta" value="recusada" class="btn btn-danger btn-sm btn-xs">
+                            <button type="submit" name="resposta" value="recusada" class=" btn-danger btn-sm btn-xs">
                                 Recusar
                             </button>
                         </form>
